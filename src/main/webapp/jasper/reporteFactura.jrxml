@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteFactura" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="446e2919-6797-4c1a-bdb9-071b8e789d0f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codVenta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.nom_pro,dv.cantidad,dv.costo_uv,c.nombre,c.nit, v.fecha_venta
+from venta v
+inner join detalle_venta dv on dv.cod_ven=v.cod_ven
+inner join producto p on p.cod_pro=dv.cod_pro
+inner join cliente c on c.cod_cli=v.cod_cli
+where v.cod_ven=$P{codVenta}]]>
+	</queryString>
+	<field name="nom_pro" class="java.lang.String"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
+	<field name="costo_uv" class="java.math.BigDecimal"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="nit" class="java.math.BigDecimal"/>
+	<field name="fecha_venta" class="java.sql.Date"/>
+	<variable name="subTotal" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{cantidad}.multiply( $F{costo_uv} )]]></variableExpression>
+	</variable>
+	<variable name="totalFactura" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{subTotal}]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="222" y="26" width="124" height="43" forecolor="#0000CC" uuid="e0244f99-c4c0-4823-921f-c17d5b88d45a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="24"/>
+				</textElement>
+				<text><![CDATA[FACTURA ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="80" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="77" y="4" width="386" height="69" uuid="66cffc29-a83f-439a-b5b9-ff315ed08d42"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="94" y="14" width="67" height="20" forecolor="#000099" uuid="5e08a0c4-3a7c-44c9-a664-0cf19db7e3ee"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CLIENTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="171" y="14" width="100" height="20" uuid="c5a6bca9-6c18-4e29-bb63-a134f18e6222"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="294" y="14" width="35" height="20" forecolor="#000099" uuid="d9a0e122-de91-431a-a611-e09b62b228f5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[NIT:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="346" y="14" width="100" height="20" uuid="d1644901-508a-4b44-98fa-135bcd9cb88e"/>
+				<textFieldExpression><![CDATA[$F{nit}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="94" y="41" width="100" height="20" forecolor="#000099" uuid="e62758c1-eafb-4a3e-8941-586626651aa1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[FECHA VENTA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="215" y="41" width="100" height="20" uuid="a2cce408-87b2-4a16-9a0d-559f5e20a87c"/>
+				<textFieldExpression><![CDATA[$F{fecha_venta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="28" y="2" width="133" height="20" uuid="6a112185-b66f-453f-96f8-5cc71b57c8bb"/>
+				<text><![CDATA[NOMBRE PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="2" width="78" height="20" uuid="5e10fbba-9ad1-47fe-acd8-0b3f27c10479"/>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="2" width="100" height="20" uuid="895adcf9-a60d-4b8d-81ef-2f9970998942"/>
+				<text><![CDATA[COSTO UNIT.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="2" width="100" height="20" uuid="a0d7ada3-0bf8-4695-b7b4-4021a3bcffb5"/>
+				<text><![CDATA[SUB TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="21" y="25" width="479" height="1" uuid="71686105-eb19-4e84-9093-4ff677ad2686"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="28" y="4" width="143" height="20" uuid="ca517c3b-0704-4603-8324-bf556f05b540"/>
+				<textFieldExpression><![CDATA[$F{nom_pro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="4" width="61" height="20" uuid="e97bcdc7-ee03-40f0-8ef9-1be1c7ffbca4"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="4" width="100" height="20" uuid="8086f392-95e5-4c8d-827d-9607f3df1414"/>
+				<textFieldExpression><![CDATA[$F{costo_uv}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="24" width="480" height="1" uuid="813d4c61-9862-4f91-ac03-4edb86d8ad5b"/>
+			</line>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="20" uuid="7f2fc241-c42e-47e4-a970-dda15cf7a6d2"/>
+				<textFieldExpression><![CDATA[$V{subTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="400" y="0" width="100" height="20" uuid="b0d3aec2-25f4-4ca5-8808-4f05c94615d9"/>
+				<textFieldExpression><![CDATA[$V{totalFactura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="266" y="0" width="105" height="20" forecolor="#000099" uuid="7dd57577-5c1b-4cee-a975-c7b09a229441"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[TOTAL A PAGAR]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

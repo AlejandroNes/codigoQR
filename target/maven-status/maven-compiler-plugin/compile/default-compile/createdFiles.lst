@@ -1,0 +1,11 @@
+com\test\bean\ProductoBean.class
+com\test\clases\Categoria.class
+com\test\clases\ProductoCompra.class
+com\test\servlet\ReporteProductoProveedor.class
+com\test\servlet\ReporteFactura.class
+com\test\conexion\VariablesConexion.class
+com\test\bean\ProveedorBean.class
+com\test\servlet\ReporteProveedor.class
+com\test\clases\PruebaReporte.class
+com\test\bean\CategoriaBean.class
+com\test\bean\VentaBean.class
